@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -31,6 +32,7 @@ export class Task {
   updated_at: string;
 
   @ManyToOne(() => User, (user) => user.tasks, { eager: false })
+  @JoinColumn({ name: 'user_id' })
   @Exclude({ toPlainOnly: true })
   user: User;
 }
