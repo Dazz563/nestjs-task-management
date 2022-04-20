@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -65,5 +66,18 @@ export class AuthService {
     } else {
       throw new UnauthorizedException('please check login credentials');
     }
+  }
+
+  async findByEmail(email: string) {
+    const user = this.userRepo.findOne({ email });
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+
+    return user;
+  }
+
+  async updateUser(id: string, newPassword: any): Promise<any> {
+    return await this.userRepo.update(id, newPassword);
   }
 }

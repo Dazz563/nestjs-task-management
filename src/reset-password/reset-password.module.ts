@@ -4,13 +4,10 @@ import { ResetPasswordController } from './reset-password.controller';
 import { PasswordReset } from './entities/reset.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SendgridService } from './sendgrid.service';
-// import { ConfigService } from '@nestjs/config';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [
-    // ConfigService,
-    TypeOrmModule.forFeature([PasswordReset]),
-  ],
+  imports: [AuthModule, TypeOrmModule.forFeature([PasswordReset])],
   providers: [ResetPasswordService, SendgridService],
   controllers: [ResetPasswordController],
 })
