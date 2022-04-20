@@ -40,5 +40,6 @@ import { ResetPasswordModule } from './reset-password/reset-password.module';
   ],
   controllers: [],
   providers: [],
+  exports: [],
 })
 export class AppModule {}
