@@ -24,7 +24,7 @@ export class ResetPasswordService {
     });
     await this.resetRepo.save({ email, token });
 
-    const url = `http://localhost:3000/reset-password/${token}`;
+    const url = `http://localhost:4200/reset-password/${token}`;
 
     const mail = {
       to: email,
