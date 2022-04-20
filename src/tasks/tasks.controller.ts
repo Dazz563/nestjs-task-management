@@ -32,9 +32,7 @@ export class TasksController {
     @GetUser() user: User,
   ): Promise<Task> {
     this.logger.verbose(
-      `User "${user.username}" creating new task ${JSON.stringify(
-        createTaskDto,
-      )}`,
+      `User "${user.email}" creating new task ${JSON.stringify(createTaskDto)}`,
     );
     return this.tasksService.createTask(createTaskDto, user);
   }
@@ -45,7 +43,7 @@ export class TasksController {
     @GetUser() user: User,
   ): Promise<Task[]> {
     this.logger.verbose(
-      `User "${user.username}" retrieving all tasks. Filters: ${JSON.stringify(
+      `User "${user.email}" retrieving all tasks. Filters: ${JSON.stringify(
         filterDto,
       )}`,
     );

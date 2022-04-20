@@ -20,20 +20,23 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    const { username, password } = authCredentialsDto;
+  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<object> {
+    const { email, password } = authCredentialsDto;
 
     // Hash password
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = this.userRepo.create({
-      username,
+      email,
       password: hashedPassword,
     });
 
     try {
       await this.userRepo.save(user);
+      return {
+        message: 'Successful Register',
+      };
     } catch (error) {
       // Check for duplicates
       if (error.code === '23505') {
@@ -47,13 +50,13 @@ export class AuthService {
   async signIn(
     authCredentialsDto: AuthCredentialsDto,
   ): Promise<{ accessToken: string }> {
-    const { username, password } = authCredentialsDto;
+    const { email, password } = authCredentialsDto;
 
-    const user = await this.userRepo.findOne({ username });
+    const user = await this.userRepo.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = {
-        username,
+        email,
       };
 
       const accessToken = await this.jwtService.sign(payload);

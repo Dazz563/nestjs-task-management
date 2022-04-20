@@ -41,9 +41,9 @@ export class TasksService {
       return tasks;
     } catch (error) {
       this.logger.error(
-        `Failed to get task for user "${
-          user.username
-        }". Filters ${JSON.stringify(filterDto)}`,
+        `Failed to get task for user "${user.email}". Filters ${JSON.stringify(
+          filterDto,
+        )}`,
         error.stack,
       );
       throw new InternalServerErrorException();
