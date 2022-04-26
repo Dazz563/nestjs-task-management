@@ -24,7 +24,7 @@ export class AuthService {
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<object> {
     const { email, password } = authCredentialsDto;
 
-    // Hash password
+    // Hash password with bycrypt
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
